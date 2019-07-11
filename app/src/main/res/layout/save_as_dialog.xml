@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/header_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:padding="15dp"
+            android:text="Save Form"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#fff" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_pdf_file_name"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+
+        android:layout_height="wrap_content"
+        android:hint="file name" />
+
+    <Button
+        android:id="@+id/pdf_gen_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/button_background"
+        android:text="Save"
+        android:textColor="#FFF"
+        android:layout_marginBottom="20dp"/>
+</LinearLayout>
