@@ -4,14 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/white"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/image_two" />
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/image_onee" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:text="PDF TOOLKIT"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/red"
+        android:fontFamily="sans-serif"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,56 +39,57 @@
             android:layout_height="100dp"
             android:layout_weight="0.45"
             app:cardBackgroundColor="@android:color/holo_blue_light"
-            app:cardCornerRadius="10dp"
-            >
+            app:cardCornerRadius="10dp">
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:background="@color/grey"
-                android:layout_height="match_parent">
-            <LinearLayout
-                android:id="@+id/ll_createpdf"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_blue_light"
-                android:gravity="center"
-                android:layout_margin="2dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:background="@color/grey">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="0.3"
-                    android:src="@drawable/image_two" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                <LinearLayout
+                    android:id="@+id/ll_createpdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:background="@android:color/holo_blue_light"
                     android:gravity="center"
-                    android:text="CREATE \n PDF"
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="0.2"
+                        android:padding="2dp"
+                        android:src="@drawable/createpdf" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:gravity="center"
+                        android:text="CREATE \n PDF"
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <Space
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="@android:color/white"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.1"
+            android:background="@android:color/white" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="0.45"
             app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="10dp"
-            >
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,8 +111,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="0.3"
-                        android:src="@drawable/image_two" />
+                        android:layout_weight="0.2"
+                        android:padding="2dp"
+                        android:src="@drawable/mergepdf" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -152,8 +166,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="0.3"
-                        android:src="@drawable/image_two" />
+                        android:layout_weight="0.2"
+                        android:padding="2dp"
+                        android:src="@drawable/lockpdf" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -171,16 +186,15 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="@android:color/white"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.1"
+            android:background="@android:color/white" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="0.45"
             app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="10dp"
-            >
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,8 +216,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="0.3"
-                        android:src="@drawable/image_two" />
+                        android:layout_weight="0.2"
+                        android:padding="1dp"
+                        android:src="@drawable/markpdf" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -233,8 +248,7 @@
             android:layout_height="100dp"
             android:layout_weight="0.45"
             app:cardBackgroundColor="@android:color/holo_blue_light"
-            app:cardCornerRadius="10dp"
-            >
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -256,8 +270,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="0.3"
-                        android:src="@drawable/image_two" />
+                        android:layout_weight="0.2"
+                        android:padding="2dp"
+                        android:src="@drawable/unlockpdf" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -275,16 +290,15 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="@android:color/white"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.1"
+            android:background="@android:color/white" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="0.45"
             app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="10dp"
-           >
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -307,8 +321,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="0.3"
-                        android:src="@drawable/image_two" />
+                        android:layout_weight="0.2"
+                        android:padding="2dp"
+                        android:src="@drawable/savedpdf" />
 
                     <TextView
                         android:layout_width="0dp"
