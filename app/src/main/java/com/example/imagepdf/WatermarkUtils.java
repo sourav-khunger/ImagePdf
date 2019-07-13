@@ -133,7 +133,7 @@ public class WatermarkUtils {
     private String createWatermark(final String path, String pdfName) throws IOException, DocumentException {
         String finalOutputFile =
                 pdfName + mContext.getString(R.string.watermarked_file);
-        Log.d("msg", "createWatermark1: "+finalOutputFile);
+        Log.d("msg", "createWatermark: "+finalOutputFile);
         PdfReader reader = new PdfReader(pathDir + path);
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(pathDir + finalOutputFile));
         Font font = new Font(this.mWatermark.getFontFamily(), this.mWatermark.getTextSize(),

@@ -54,13 +54,14 @@ public class PDFActivity extends AppCompatActivity {
 
 
         try {
-            doc = PDDocument.load(new File(path +name), "password");
+            doc = PDDocument.load(new File(path), "password");
             if (doc.isEncrypted()) {
 
                 Toast.makeText(getApplicationContext(), "PDF locked", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
        /* pdfView.fromFile(file)

@@ -44,7 +44,7 @@ public class AddWaterMark extends AppCompatActivity {
     ImageView selected_share_pdf, hide_checkBox;
     TextView no_files;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -50,15 +50,19 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf,ll_lockpdf,ll_markpdf,ll_unloc
     Button save_pdf_btn;
     Dialog dialog;
     static Image image;
-    String p;
+    String root,watermarkpath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        p= Environment.getExternalStorageDirectory() + "/AVI PDF FORMS/";
-        File path = new File(p);
+        root= Environment.getExternalStorageDirectory() + "/AVI PDF FORMS/";
+        watermarkpath= Environment.getExternalStorageDirectory() + "/AVI PDF FORMS/WATERMARK";
+        File path = new File(root);
+        File waterpath = new File(watermarkpath);
         if (!path.exists()) {
             path.mkdirs();
+//            waterpath.mkdirs();
+
         }
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.CAMERA)
@@ -268,7 +272,7 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf,ll_lockpdf,ll_markpdf,ll_unloc
     public void createPdf(String pdfFileName) throws IOException, DocumentException {
         Image img = Image.getInstance(imagePathList.get(0));
         Document document = new Document(img);
-        PdfWriter.getInstance(document, new FileOutputStream(p + "/" + pdfFileName + ".pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream(root + "/" + pdfFileName + ".pdf"));
         document.open();
         for (String image : imagePathList) {
             img = Image.getInstance(image);
@@ -285,7 +289,7 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf,ll_lockpdf,ll_markpdf,ll_unloc
     public void createPdfSingleImage(String pdfFileName) throws IOException, DocumentException {
         Image img = Image.getInstance(getImagePath(mImageUri));
         Document document = new Document(img);
-        PdfWriter.getInstance(document, new FileOutputStream(p + "/" + pdfFileName + ".pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream(root + "/" + pdfFileName + ".pdf"));
         document.open();
         img = Image.getInstance(getImagePath(mImageUri));
         document.setPageSize(img);
