@@ -49,6 +49,9 @@ public class PDFActivity extends AppCompatActivity {
             }).load();
 
         }
+        pdfView.fromFile(file)
+                .password("password")
+                .load();
     }
 
     @Override

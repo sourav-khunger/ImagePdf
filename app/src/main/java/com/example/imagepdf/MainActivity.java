@@ -40,7 +40,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf;
+LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf,ll_lockpdf,ll_markpdf,ll_unlockpdf;
     List<String> imagePathList=new ArrayList<>();
     List<String> imagesEncodedList=new ArrayList<>();
     String imageEncoded;
@@ -99,10 +99,16 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf;
         ll_createpdf=findViewById(R.id.ll_createpdf);
         ll_mergepdf=findViewById(R.id.ll_mergepdf);
         ll_savedpdf=findViewById(R.id.ll_savedpdf);
+        ll_lockpdf=findViewById(R.id.ll_lockpdf);
+        ll_markpdf=findViewById(R.id.ll_markpdf);
+        ll_unlockpdf=findViewById(R.id.ll_unlockpdf);
 
         ll_createpdf.setOnClickListener(this);
         ll_mergepdf.setOnClickListener(this);
         ll_savedpdf.setOnClickListener(this);
+        ll_lockpdf.setOnClickListener(this);
+        ll_markpdf.setOnClickListener(this);
+        ll_unlockpdf.setOnClickListener(this);
     }
 
 
@@ -117,15 +123,19 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf;
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
-
                 break;
 
             case R.id.ll_savedpdf:
                 startActivity(new Intent(MainActivity.this,PdfFilesActivity.class));
+                break;
 
+            case R.id.ll_lockpdf:
+                startActivity(new Intent(MainActivity.this,LockPdfActivity.class));
+
+            case R.id.ll_markpdf:
+//                startActivity(new Intent(MainActivity.this,AddWaterMark.class));
                 break;
         }
     }

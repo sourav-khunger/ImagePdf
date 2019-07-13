@@ -8,4 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="customtheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
+
 </resources>
