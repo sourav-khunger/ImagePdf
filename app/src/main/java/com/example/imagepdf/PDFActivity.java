@@ -2,7 +2,9 @@ package com.example.imagepdf;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import java.io.IOException;
 public class PDFActivity extends AppCompatActivity {
     TextView pdf_name;
     PDDocument doc = null;
+    SharedPreferences sp_password;
+    SharedPreferences.Editor editor_password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +28,11 @@ public class PDFActivity extends AppCompatActivity {
 
         PDFView pdfView = findViewById(R.id.pdfView);
         pdf_name = findViewById(R.id.pdffile_name);
+
+        sp_password=getSharedPreferences("STORE_PASSWORDS", Context.MODE_PRIVATE);
+        editor_password=sp_password.edit();
+        String pass=sp_password.getString("PASSWORD1","");
+
         //SCROLLBAR TO ENABLE SCROLLING
 //        ScrollBar scrollBar = (ScrollBar) findViewById(R.id.scrollBar);
 //        pdfView.setScrollBar(scrollBar);
@@ -54,7 +63,7 @@ public class PDFActivity extends AppCompatActivity {
 
 
         try {
-            doc = PDDocument.load(new File(path), "password");
+            doc = PDDocument.load(new File(path), pass);
             if (doc.isEncrypted()) {
 
                 Toast.makeText(getApplicationContext(), "PDF locked", Toast.LENGTH_SHORT).show();

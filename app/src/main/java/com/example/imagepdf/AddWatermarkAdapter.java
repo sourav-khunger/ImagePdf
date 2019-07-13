@@ -2,6 +2,7 @@ package com.example.imagepdf;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -153,13 +155,31 @@ public class AddWatermarkAdapter extends BaseAdapter {
         nameTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPDFView(pdfDoc.getPath(), pdfDoc.getName());
+
+
+                //openPDFView(pdfDoc.getPath(), pdfDoc.getName());
+
+                File file = new File(path+pdfDoc.getName());
+                if (file.exists()) {
+                    Uri path = Uri.fromFile(file);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(path, "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    try {
+                        c.startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Toast.makeText(c, "No Application Available to View PDF", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPDFView(pdfDoc.getPath(), pdfDoc.getName());
+                //openPDFView(pdfDoc.getPath(), pdfDoc.getName());
             }
         });
         selected_share_pdf.setOnClickListener(new View.OnClickListener() {

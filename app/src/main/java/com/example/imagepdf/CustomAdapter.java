@@ -1,6 +1,7 @@
 package com.example.imagepdf;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class CustomAdapter extends BaseAdapter {
     ImageView selected_share_pdf, hide_checkBox;
     ArrayList<Uri> selectedStrings = new ArrayList<Uri>();
     Button delete_yes_btn, delete_no_btn;
-
+    String path;
 
     public CustomAdapter(Context c, ArrayList<PDFDoc> pdfDocs, boolean showCheckBox,
                          ImageView selected_share_pdf, ImageView hide_checkBox) {
@@ -67,6 +69,7 @@ public class CustomAdapter extends BaseAdapter {
         }
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        path = Environment.getExternalStorageDirectory() + "/AVI PDF FORMS/";
 
         final PDFDoc pdfDoc = (PDFDoc) this.getItem(i);
         TextView nameTxt = (TextView) view.findViewById(R.id.nameTxt);
@@ -132,13 +135,28 @@ public class CustomAdapter extends BaseAdapter {
         nameTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPDFView(pdfDoc.getPath(), pdfDoc.getName());
+                //openPDFView(pdfDoc.getPath(), pdfDoc.getName());
+                File file = new File(path+pdfDoc.getName());
+                if (file.exists()) {
+                    Uri path = Uri.fromFile(file);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(path, "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    try {
+                        c.startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Toast.makeText(c, "No Application Available to View PDF", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPDFView(pdfDoc.getPath(), pdfDoc.getName());
+                //openPDFView(pdfDoc.getPath(), pdfDoc.getName());
             }
         });
         selected_share_pdf.setOnClickListener(new View.OnClickListener() {

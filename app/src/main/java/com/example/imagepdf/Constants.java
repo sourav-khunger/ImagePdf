@@ -79,11 +79,35 @@ public class Constants {
     public static final String LAUNCH_COUNT = "launch_count";
 
     public static final String pdfDirectory = "/PDFfiles/";
-
+    public static final String pdfExtension = ".pdf";
+    public static final String appName = "PDF Converter";
+    public static final String PATH_SEPERATOR = "/";
+    public static final String textExtension = ".txt";
+    public static final String excelExtension = ".xls";
+    public static final String excelWorkbookExtension = ".xlsx";
+    public static final String docExtension = ".doc";
+    public static final String docxExtension = ".docx";
     public static final String tempDirectory = "temp";
 
+    public static final String AUTHORITY_APP = "com.swati4star.shareFile";
 
+    public static final String ACTION_SELECT_IMAGES = "android.intent.action.SELECT_IMAGES";
+    public static final String ACTION_VIEW_FILES = "android.intent.action.VIEW_FILES";
+    public static final String ACTION_TEXT_TO_PDF = "android.intent.action.TEXT_TO_PDF";
+    public static final String ACTION_MERGE_PDF = "android.intent.action.MERGE_PDF";
+    public static final String OPEN_SELECT_IMAGES = "open_select_images";
 
+    public static final String THEME_WHITE = "White";
+    public static final String THEME_BLACK = "Black";
+    public static final String THEME_DARK = "Dark";
+
+    public static final String IS_WELCOME_ACTIVITY_SHOWN = "is_Welcome_activity_shown";
+    public static final String SHOW_WELCOME_ACT = "show_welcome_activity";
+
+    public static final String VERSION_NAME = "VERSION_NAME";
+
+    public static final String PREF_PAGE_STYLE = "pref_page_number_style";
+    public static final String PREF_PAGE_STYLE_ID = "pref_page_number_style_rb_id";
 
     public static final String[] READ_WRITE_PERMISSIONS = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,

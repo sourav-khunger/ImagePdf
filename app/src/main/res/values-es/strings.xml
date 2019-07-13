@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PDF Converter</string>
+    <string name="app_name">AVI Pdf Pro</string>
     <string name="title">Acciones PDF</string>
 
     <string name="file_name_text">Nombre del archivo</string>

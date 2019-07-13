@@ -143,6 +143,10 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf,ll_lockpdf,ll_markpdf,ll_unloc
                 break;
             case R.id.ll_markpdf:
                 startActivity(new Intent(MainActivity.this,AddWaterMark.class));
+                break;
+
+            case R.id.ll_unlockpdf:
+                startActivity(new Intent(MainActivity.this,UnlockPdfActivity.class));
 
                 break;
         }
