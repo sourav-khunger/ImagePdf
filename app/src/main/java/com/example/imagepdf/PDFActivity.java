@@ -9,12 +9,14 @@ import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.tom_roush.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
+import java.io.IOException;
 
 public class PDFActivity extends AppCompatActivity {
     TextView pdf_name;
-
+    PDDocument doc = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +51,21 @@ public class PDFActivity extends AppCompatActivity {
             }).load();
 
         }
-        pdfView.fromFile(file)
+
+
+        try {
+            doc = PDDocument.load(new File(path +name), "password");
+            if (doc.isEncrypted()) {
+
+                Toast.makeText(getApplicationContext(), "PDF locked", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+       /* pdfView.fromFile(file)
                 .password("password")
-                .load();
+                .load();*/
     }
 
     @Override

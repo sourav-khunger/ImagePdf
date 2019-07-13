@@ -49,10 +49,10 @@ public class AddWaterMark extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_water_mark);
-        selected_share_pdf = findViewById(R.id.share_selected);
-        hide_checkBox = findViewById(R.id.hide_checkbox);
-        lv = (ListView) findViewById(R.id.list2);
-        no_files = findViewById(R.id.no_pdf_file);
+        selected_share_pdf = findViewById(R.id.share_selected2);
+        hide_checkBox = findViewById(R.id.hide_checkbox2);
+        lv = (ListView) findViewById(R.id.list4);
+        no_files = findViewById(R.id.no_pdf_file2);
 
         if (getPDFs().isEmpty()) {
             no_files.setVisibility(View.VISIBLE);

@@ -109,6 +109,9 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf,ll_lockpdf,ll_markpdf,ll_unloc
         ll_lockpdf.setOnClickListener(this);
         ll_markpdf.setOnClickListener(this);
         ll_unlockpdf.setOnClickListener(this);
+
+
+
     }
 
 
@@ -133,9 +136,10 @@ LinearLayout ll_createpdf,ll_mergepdf,ll_savedpdf,ll_lockpdf,ll_markpdf,ll_unloc
 
             case R.id.ll_lockpdf:
                 startActivity(new Intent(MainActivity.this,LockPdfActivity.class));
-
+                break;
             case R.id.ll_markpdf:
-//                startActivity(new Intent(MainActivity.this,AddWaterMark.class));
+                startActivity(new Intent(MainActivity.this,AddWaterMark.class));
+
                 break;
         }
     }
