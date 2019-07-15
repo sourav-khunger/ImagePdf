@@ -20,7 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UnlockPdfActivity"></activity>
+        <activity android:name=".Createpdf2"
+            android:theme="@style/darktheme"></activity>
+        <activity android:name=".SingleMultiplePdf" />
+        <activity android:name=".UnlockPdfActivity" />
         <activity android:name=".LockPdfActivity" />
         <activity android:name=".PDFActivity" />
         <activity android:name=".PdfFilesActivity" />

@@ -69,7 +69,7 @@ public class UnlockPdfAdapter extends BaseAdapter {
         nameTxt.setText(pdfDoc.getName());
         img.setImageResource(R.drawable.pdf_icon);
 
-        unlock_pdf.setOnClickListener(new View.OnClickListener() {
+        nameTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPDFEncryptionUtils.removePassword(path,removeExt(pdfDoc.getName()));

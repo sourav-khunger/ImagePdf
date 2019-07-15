@@ -40,7 +40,7 @@ public class LockPdfAdapter extends BaseAdapter {
     ArrayList<PDFDoc> pdfDocs;
     Context c;
     String path;
-    SharedPreferences sp_password,mSharedPrefs;
+    SharedPreferences mSharedPrefs;
     SharedPreferences.Editor editor_password;
     private PDFEncryptionUtility mPDFEncryptionUtils;
 
@@ -88,8 +88,7 @@ public class LockPdfAdapter extends BaseAdapter {
         final String password = ed_password.getText().toString().trim();
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(c);
-        sp_password=c.getSharedPreferences("STORE_PASSWORDS",Context.MODE_PRIVATE);
-        editor_password=sp_password.edit();
+
 
 //        final String USER_PASSWORD = ed_password.getText().toString().trim();
 //        final String OWNER_PASSWORD = ed_password.getText().toString().trim();
@@ -99,7 +98,7 @@ public class LockPdfAdapter extends BaseAdapter {
 
         //VIEW ITEM CLICK
 
-        lock_pdf.setOnClickListener(new View.OnClickListener() {
+        nameTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Document document = new Document();

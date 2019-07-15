@@ -7,4 +7,10 @@
     android:background="@android:color/white"
     tools:context=".MergePdfActivity">
 
+   <!-- <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MERGE"
+        android:id="@+id/btn_merge"/>-->
+
 </LinearLayout>

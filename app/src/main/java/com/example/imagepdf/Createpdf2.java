@@ -1,29 +1,39 @@
 package com.example.imagepdf;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
+import com.bumptech.glide.Glide;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -33,70 +43,117 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class CreatePdfActivity extends AppCompatActivity {
-    ImageView iv_photo;
-    Button btn_createpdf;
-    Dialog dialog,dialog1;
+public class Createpdf2 extends AppCompatActivity implements View.OnClickListener {
+    ImageView iv_pic;
+    EditText ed_pdf_name;
+    Button btn_createe_pdf;
+    Bitmap bitmap;
+    static byte[] bArray;
+    Dialog dialog, dialog1;
     EditText et_save_pdf_file;
     Button save_pdf_btn;
     String pdf;
-    String dirpath;
-    Bitmap bitmap;
-    private static String FILE = "";
     static Image image;
-    static byte[] bArray;
     String p;
+    RecyclerView gridview;
+    //public SharedPref prefs;
+    //ImageListAdapter gridAdapter;
     List<String> imagePathList=new ArrayList<>();
     List<String> imagesEncodedList=new ArrayList<>();
     String imageEncoded;
     Uri mImageUri;
+    private  List<String> listOfImagesPath;
+    public String GridViewDemo_ImagePath="";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    ArrayList<CapturedImageData> myChimImagesList = new ArrayList<CapturedImageData>();
+    private String[] arrPath;
+    private boolean[] thumbnailsselection;
+    private int ids[];
+    private int count;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_pdf);
-        iv_photo = findViewById(R.id.iv_photo);
-        btn_createpdf = findViewById(R.id.btn_createpdf);
-
-
+        setContentView(R.layout.activity_createpdf2);
+        iv_pic = findViewById(R.id.iv_picc);
+        btn_createe_pdf = findViewById(R.id.btn_createe_pdf);
+        ed_pdf_name = findViewById(R.id.ed_pdf_name);
+        gridview=findViewById(R.id.gridview);
+        listOfImagesPath=new ArrayList<>();
+      /*  gridAdapter = new ImageListAdapter(getApplicationContext());
+        gridview.setAdapter(gridAdapter);*/
         p = Environment.getExternalStorageDirectory() + "/AVI PDF FORMS/";
+        GridViewDemo_ImagePath = Environment.getExternalStorageDirectory() + "/AVI PDF FORMS/";
         File path = new File(p);
+        File path1 = new File(GridViewDemo_ImagePath);
         if (!path.exists()) {
             path.mkdirs();
+            path1.mkdirs();
         }
 
-        selectImage();
+        /*listOfImagesPath.clear();
+        listOfImagesPath = RetriveCapturedImagePath();
+        if(listOfImagesPath!=null){
+            gridview.setAdapter(new ImageListAdapter(this,listOfImagesPath));
+        }*/
+        this.setTitle("CREATE PDF");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        iv_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectImage();
-            }
-        });
 
-        btn_createpdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-                //imageToPDF();
-            }
-        });
+        iv_pic.setOnClickListener(this);
+        btn_createe_pdf.setOnClickListener(this);
+        iv_pic.setOnClickListener(this);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
 
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_picc:
+                selectImage();
+               /* Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                startActivityForResult(intent, 1);*/
+                break;
+
+            case R.id.btn_createe_pdf:
+                showDialog();
+                break;
+
+
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onBackPressed();
+        return true;
+    }
+
+
     //dialog for image chooser
     private void selectImage() {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(CreatePdfActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Createpdf2.this);
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -104,11 +161,32 @@ public class CreatePdfActivity extends AppCompatActivity {
                 StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
                 StrictMode.setVmPolicy(builder.build());
                 if (options[item].equals("Take Photo")) {
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                   /* try {
+                        //use standard intent to capture an image
+                        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        //we will handle the returned data in onActivityResult
+                        startActivityForResult(captureIntent, 1);
+                    } catch(ActivityNotFoundException e){
+                        //display an error message
+                        String errorMessage = "Whoops - your device doesn't support capturing images!";
+                        Toast.makeText(Createpdf2.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }*/
+                  /*  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
+                    startActivityForResult(intent, 1);*/
+
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    Uri fileUri = getOutputMediaFile();
+
+
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+
+                    intent.putExtra("aspectY", 0);
+                    intent.putExtra("outputX", 150);
+                    intent.putExtra("outputY", 150);
+                    startActivityForResult(intent, 8888);
                 } else if (options[item].equals("Choose from Gallery")) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
@@ -123,6 +201,39 @@ public class CreatePdfActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String _path = null;
+        if (resultCode == RESULT_OK) {
+
+            //user is returning from capturing an image using the camera
+            if(requestCode == 1){
+                Bundle extras = data.getExtras();
+                Bitmap thePic = extras.getParcelable("data");
+                File imageDirectory = new File(p);
+                imageDirectory.mkdirs();
+                for(int z=0;z<imageDirectory.length();z++){
+                    _path = GridViewDemo_ImagePath+z+"image.jpg";
+                }
+
+                try {
+                    FileOutputStream out = new FileOutputStream(_path);
+                    thePic.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                    out.close();
+                } catch (FileNotFoundException e) {
+                    e.getMessage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //listOfImagesPath = null;
+                listOfImagesPath = RetriveCapturedImagePath();
+                if(listOfImagesPath!=null){
+               // gridview.setAdapter(new ImageListAdapter(this,listOfImagesPath));
+            }
+        }
+        }
+    }
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -141,7 +252,14 @@ public class CreatePdfActivity extends AppCompatActivity {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                     bArray = stream.toByteArray();
-                    iv_photo.setImageBitmap(bitmap);
+                    listOfImagesPath = null;
+                    listOfImagesPath = RetriveCapturedImagePath();
+                    Log.d("msg", "onActivityResult7: "+listOfImagesPath);
+                    if(listOfImagesPath!=null){
+                        gridview.setAdapter(new ImageListAdapter(this,listOfImagesPath));
+
+                    }
+                  //  iv_pic.setImageBitmap(bitmap);
 
                     String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
                     f.delete();
@@ -161,10 +279,14 @@ public class CreatePdfActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+
+
+
             } else if (requestCode == 2) {
 
 
-                /*Uri selectedImage = data.getData();
+                *//*Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
                 Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
                 c.moveToFirst();
@@ -177,12 +299,11 @@ public class CreatePdfActivity extends AppCompatActivity {
                 bArray = stream.toByteArray();
 
 
-                iv_photo.setImageBitmap(bitmap);*/
+                iv_photo.setImageBitmap(bitmap);*//*
 
 
-
-                    // When an Image is picked
-                        // Get the Image from data
+                // When an Image is picked
+                // Get the Image from data
 
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 imagesEncodedList = new ArrayList<String>();
@@ -234,12 +355,10 @@ public class CreatePdfActivity extends AppCompatActivity {
                     }
                 }
 
-
             }
         }
-    }
+    }*/
 
-    //show dialog on create pdf
     void showDialog() {
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.save_as_dialog);
@@ -330,6 +449,7 @@ public class CreatePdfActivity extends AppCompatActivity {
         }
     }
 
+
     void showSavePdfDialog(final boolean more) {
         dialog1=new Dialog(this);
         dialog1.setContentView(R.layout.save_pdf_dialog);
@@ -416,4 +536,63 @@ public class CreatePdfActivity extends AppCompatActivity {
         dialog1.dismiss();
         Toast.makeText(this, "PDF Saved!", Toast.LENGTH_SHORT).show();
     }
+
+    private List<String> RetriveCapturedImagePath() {
+        List<String> tFileList = new ArrayList<String>();
+        File f = new File(p);
+        if (f.exists()) {
+            File[] files=f.listFiles();
+            Arrays.sort(files);
+
+            for(int i=0; i<files.length; i++){
+                File file = files[i];
+                if(file.isDirectory())
+                    continue;
+                tFileList.add(file.getPath());
+            }
+        }
+        return tFileList;
+    }
+
+
+
+
+    public Uri getOutputMediaFile() {
+
+        File mediaStorageDir = new File(
+                Environment.getExternalStorageDirectory(), "GalleryAppCameraImages");
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            mediaStorageDir.mkdirs();
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+
+        mediaFile = new File(mediaStorageDir.getPath(), "IMG_" + timeStamp + ".jpg");
+
+        Uri uri = null;
+        if (mediaFile != null) {
+
+            uri = FileProvider.getUriForFile(Createpdf2.this,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    mediaFile);
+
+           // prefs.setImagePath(this, mediaFile.getPath());
+        }
+        addChimImages();
+        return uri;
+    }
+
+    void addChimImages() {
+        if (myChimImagesList != null) {
+            myChimImagesList.add(new CapturedImageData());
+        }
+
+        gridview.setAdapter(new ImageListAdapter(this, myChimImagesList));
+    }
+
 }
